@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@+id/articleListFragment"
+    android:id="@+id/nav_graph">
+
+    <fragment
+        android:id="@+id/articleListFragment"
+        android:name="com.example.dailynews.fragments.ArticlesListFragment"
+        android:label="List Fragment">
+        <action
+            android:id="@+id/action_list_to_details"
+            app:destination="@id/detailsFragment" />
+        <argument
+            android:name="articleSelected"
+            app:argType="com.example.dailynews.data.models.Article" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.example.dailynews.fragments.ArticleDetailsFragment"
+        android:label="Details Fragment">
+        <action
+            android:id="@+id/action_detailsFragment_to_articleListFragment"
+            app:destination="@id/articleListFragment" />
+        <argument
+            android:name="selectedArticle"
+            app:argType="com.example.dailynews.data.models.Article" />
+    </fragment>
+
+</navigation>
