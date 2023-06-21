@@ -5,6 +5,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -53,15 +56,29 @@ class ArticleDetailsFragment : Fragment() {
         articleImageIV = view.findViewById(R.id.articleImageIV)
 
         titleTV.text = article.title
-        authorTV.text = article.author
+
+        authorTV.text = if (article.author != null && article.author!!.isNotEmpty()) {
+            buildString {
+                append("Author: ")
+                append(article.author)
+            }
+        } else {
+            null
+        }
         dateTV.text = article.publishedAt?.let {
             DateTimeUtil.formatDate(it)
         }
-        articleContentTV.text = article.content
-        articleContentTV.setOnClickListener{
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(article.url)
-            startActivity(intent)
+        if(article.content!=null) {
+            val modifiedText = article.content!!.replace("\\s*\\[\\+\\d+\\s+chars]".toRegex(), " Read more")
+
+            val content = SpannableString(modifiedText)
+            content.setSpan(UnderlineSpan(), content.indexOf("Read more"), content.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            articleContentTV.text = content
+            articleContentTV.setOnClickListener {
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse(article.url)
+                startActivity(intent)
+            }
         }
 
         ImageLoaderUtil.loadImages(articleImageIV, article.urlToImage ?: "", context)

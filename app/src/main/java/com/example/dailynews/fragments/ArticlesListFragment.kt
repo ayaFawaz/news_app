@@ -67,11 +67,12 @@ class ArticlesListFragment : Fragment() {
         }
 
         searchArticlesET.addTextChangedListener( object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
                 if(s!=null) {
                     articleViewModel.searchInArticles(s.toString())
                     articleViewModel.filteredList.observe(viewLifecycleOwner, Observer {
@@ -81,11 +82,6 @@ class ArticlesListFragment : Fragment() {
                         }
                     })
                 }
-
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-
             }
         }
 
@@ -94,5 +90,7 @@ class ArticlesListFragment : Fragment() {
         return view
     }
 
-
+    override fun onDestroy() {
+        super.onDestroy()
+    }
 }

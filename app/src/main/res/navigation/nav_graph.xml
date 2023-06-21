@@ -7,10 +7,14 @@
     <fragment
         android:id="@+id/articleListFragment"
         android:name="com.example.dailynews.fragments.ArticlesListFragment"
-        android:label="List Fragment">
+        android:label="Daily Articles">
         <action
             android:id="@+id/action_list_to_details"
-            app:destination="@id/detailsFragment" />
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
         <argument
             android:name="articleSelected"
             app:argType="com.example.dailynews.data.models.Article" />
@@ -19,7 +23,7 @@
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.example.dailynews.fragments.ArticleDetailsFragment"
-        android:label="Details Fragment">
+        android:label="Details">
         <action
             android:id="@+id/action_detailsFragment_to_articleListFragment"
             app:destination="@id/articleListFragment" />
